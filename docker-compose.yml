@@ -1,0 +1,46 @@
+version: '3.7'
+
+networks:
+   mall:
+     driver: bridge
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=mall_db
+      - MYSQL_USER=mall
+      - MYSQL_PASSWORD=123456
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./config/sql:/docker-entrypoint-initdb.d/
+    ports:
+      - "3307:3306"
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    environment:
+      - REDIS_PASSWORD=123456
+      - REDIS_DB_NAME=4
+      - ALLOW_EMPTY_PASSWORD=no
+    volumes:
+      - /usr/local/redis:/usr/local/redis
+    ports:
+      - "6379:6379"
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:latest
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+
+
