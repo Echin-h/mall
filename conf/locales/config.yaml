@@ -47,9 +47,10 @@ email:
   smtpPass:
 
 encryptSecret:
-  jwtSecret: "FanOne666Secret"
+  jwtSecret: "tokenSecret"
   emailSecret: "EmailSecret"
   phoneSecret: "PhoneSecret"
+  moneySecret: "MoneySecret"
 
 oss:
   AccessKeyId:

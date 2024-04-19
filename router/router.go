@@ -1,6 +1,7 @@
 package router
 
 import (
+	api "gin-mall/api/v1"
 	"gin-mall/middelware"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
