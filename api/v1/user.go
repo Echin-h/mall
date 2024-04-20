@@ -41,6 +41,20 @@ func UserRegisterHandler() gin.HandlerFunc {
 
 func UserLoginHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-
+		var req types.UserServiceReq
+		if err := ctx.ShouldBind(&req); err != nil {
+			log.LogrusObj.WithField("shouldBind", err).Error("shouldBind error")
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
+			return
+		}
+		// 单例化操作
+		l := service.GetUserSrv()
+		resp, err := l.UserLogin(ctx.Request.Context(), &req)
+		if err != nil {
+			log.LogrusObj.Infoln(err)
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
+			return
+		}
+		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
 	}
 }

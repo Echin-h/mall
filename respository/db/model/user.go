@@ -2,6 +2,7 @@ package model
 
 import (
 	conf "gin-mall/conf/sql"
+	"gin-mall/consts"
 	"github.com/CocaineCong/secret"
 	"github.com/spf13/cast"
 	"golang.org/x/crypto/bcrypt"
@@ -34,6 +35,19 @@ func (u *User) SetPassword(password string) error {
 	return nil
 }
 
+func (u *User) CheckPassword(password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(u.PasswordDigest), []byte(password))
+	return err == nil
+}
+
+func (u *User) AvatarURL() string {
+	if conf.Config.System.UploadModel == consts.UploadModelOss {
+		return u.Avatar
+	}
+	pConfig := conf.Config.PhotoPath
+	return pConfig.PhotoHost + conf.Config.System.HttpPort + pConfig.AvatarPath + u.Avatar
+}
+
 // 加密Money，这里是使用的是其他人的一个库
 func (u *User) EncryptMoney(key string) (money string, err error) {
 	aes, err := secret.NewAesEncrypt(conf.Config.EncryptSecret.MoneySecret, key, "", secret.AesEncrypt128, secret.AesModeTypeCBC)
@@ -45,7 +59,7 @@ func (u *User) EncryptMoney(key string) (money string, err error) {
 }
 
 // 解密金额
-func (u *User) CheckPassword(password string) (money float64, err error) {
+func (u *User) DecryptMoney(password string) (money float64, err error) {
 	aes, err := secret.NewAesEncrypt(conf.Config.EncryptSecret.MoneySecret, password, "", secret.AesEncrypt128, secret.AesModeTypeCBC)
 	if err != nil {
 		return
