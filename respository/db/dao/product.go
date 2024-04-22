@@ -50,3 +50,10 @@ func (dao *ProductDao) ShowProduct(id uint) (*model.Product, error) {
 		First(&product).Error
 	return &product, err
 }
+
+func (dao *ProductDao) UpdateProduct(id uint, product *model.Product) (err error) {
+	err = dao.DB.Model(&model.Product{}).Where("id = ?", id).
+		Updates(product).Error
+
+	return
+}

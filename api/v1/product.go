@@ -82,3 +82,24 @@ func ShowProductHandler() gin.HandlerFunc {
 		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
 	}
 }
+
+// TODO: 先实现用户信息缓存到Redis，然后在service层调用Redis，验证用户信息
+
+func UpdateProjectHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.ProductUpdateReq
+		if err := ctx.ShouldBindJSON(&req); err != nil {
+			log.LogrusObj.Error("json parse error")
+			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			return
+		}
+		l := service.GetProductSrv()
+		resp, err := l.UpdateProject(ctx, &req)
+		if err != nil {
+			log.LogrusObj.Error("UpdateProduct is wrong")
+			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			return
+		}
+		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
+	}
+}

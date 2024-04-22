@@ -173,3 +173,33 @@ func (s *ProductSrv) ProductShow(ctx context.Context, req *types.ProductShowReq)
 	resp = pResp
 	return
 }
+
+func (s *ProductSrv) UpdateProject(ctx context.Context, req *types.ProductUpdateReq) (resp interface{}, err error) {
+	//u, err := ctl.GetUserInfo(ctx)
+	//if err != nil {
+	//	log.LogrusObj.Error(err)
+	//	return nil, err
+	//}
+	//if u.Id != req.BossID {
+	//	log.LogrusObj.Infoln("no auth")
+	//	return nil, err
+	//}
+	product := &model.Product{
+		Name:       req.Name,
+		CategoryID: req.CategoryID,
+		Title:      req.Title,
+		Info:       req.Info,
+		// ImgPath:       service.ImgPath,
+		Price:         req.Price,
+		DiscountPrice: req.DiscountPrice,
+		OnSale:        req.OnSale,
+	}
+
+	err = dao.NewProductDao(ctx).UpdateProduct(req.ID, product)
+	if err != nil {
+		log.LogrusObj.Error("update product error")
+		return nil, err
+	}
+
+	return product, nil
+}
