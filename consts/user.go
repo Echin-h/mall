@@ -11,3 +11,10 @@ const (
 	UploadModelOss   = "oss"
 	UploadModelLocal = "local"
 )
+
+const (
+	AccessTokenHeader    = "access_token"
+	RefreshTokenHeader   = "refresh_token"
+	HeaderForwardedProto = "X-Forwarded-Proto"
+	MaxAge               = 3600 * 24
+)

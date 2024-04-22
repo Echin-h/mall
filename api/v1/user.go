@@ -58,3 +58,5 @@ func UserLoginHandler() gin.HandlerFunc {
 		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
 	}
 }
+
+//func UserInfoUpdate(ctx)

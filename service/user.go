@@ -5,7 +5,7 @@ import (
 	"errors"
 	conf "gin-mall/conf/sql"
 	"gin-mall/consts"
-	"gin-mall/pkg/jwt"
+	"gin-mall/pkg/util/jwt"
 	"gin-mall/pkg/util/log"
 	"gin-mall/respository/db/dao"
 	"gin-mall/respository/db/model"

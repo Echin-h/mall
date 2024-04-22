@@ -1,6 +1,10 @@
 package model
 
-import "gorm.io/gorm"
+import (
+	"gin-mall/respository/cache"
+	"gorm.io/gorm"
+	"strconv"
+)
 
 type Product struct {
 	gorm.Model
@@ -16,4 +20,11 @@ type Product struct {
 	BossID        uint
 	BossName      string
 	BossAvatar    string
+}
+
+// 获取点击数，点击数是存放在redis中的
+func (product *Product) View() uint64 {
+	res, _ := cache.RedisClient.Get(cache.RedisContext, cache.ProductViewKey(product.ID)).Result()
+	count, _ := strconv.ParseUint(res, 10, 64)
+	return count
 }
