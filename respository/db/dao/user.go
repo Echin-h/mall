@@ -31,3 +31,14 @@ func (dao *UserDao) ExistOrNotByUserName(userName string) (user *model.User, exi
 	}
 	return user, true, nil
 }
+
+func (dao *UserDao) GetUserById(userId uint) (user *model.User, err error) {
+	err = dao.DB.Model(&model.User{}).Where("id = ?", userId).
+		First(&user).Error
+	return
+}
+
+func (dao *UserDao) UpdateUserById(uid uint, user *model.User) (err error) {
+	return dao.DB.Model(&model.User{}).Where("id = ?", uid).
+		Updates(&user).Error
+}

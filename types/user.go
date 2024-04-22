@@ -30,3 +30,10 @@ type UserLoginResp struct {
 	Token        string      `json:"token"`
 	RefreshToken string      `json:"refresh_token"`
 }
+
+type UserInfoUpdateReq struct {
+	NickName string `form:"nick_name" json:"nick_name"`
+	// 很好奇为什么只能改昵称。。。
+	// 很好奇是不是
+	// 我也很好奇啊
+}

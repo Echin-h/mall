@@ -8,6 +8,7 @@ import (
 	"gin-mall/service"
 	"gin-mall/types"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"net/http"
 )
 
@@ -60,3 +61,24 @@ func UserLoginHandler() gin.HandlerFunc {
 }
 
 //func UserInfoUpdate(ctx)
+
+func UserUpdateHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.UserInfoUpdateReq
+		if err := ctx.ShouldBindWith(&req, binding.JSON); err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			return
+		}
+		// 单例化操作
+		l := service.GetUserSrv()
+		resp, err := l.UserUpdate(ctx.Request.Context(), &req)
+		if err != nil {
+			log.LogrusObj.Infoln(err)
+			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			return
+		}
+
+		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
+	}
+}

@@ -5,6 +5,7 @@ import (
 	"errors"
 	conf "gin-mall/conf/sql"
 	"gin-mall/consts"
+	"gin-mall/pkg/util/ctl"
 	"gin-mall/pkg/util/jwt"
 	"gin-mall/pkg/util/log"
 	"gin-mall/respository/db/dao"
@@ -112,4 +113,23 @@ func (s *UserSrv) UserLogin(ctx context.Context, req *types.UserServiceReq) (res
 
 	return
 
+}
+
+func (s *UserSrv) UserUpdate(ctx context.Context, req *types.UserInfoUpdateReq) (resp interface{}, err error) {
+	u, _ := ctl.GetUserInfo(ctx)
+	userDao := dao.NewUserDao(ctx)
+	user, err := userDao.GetUserById(u.Id)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+
+	if req.NickName != "" {
+		user.NickName = req.NickName
+	}
+
+	err = userDao.UpdateUserById(u.Id, user)
+	log.LogrusObj.Infoln(err)
+
+	return
 }
