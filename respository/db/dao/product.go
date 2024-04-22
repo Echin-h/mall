@@ -43,3 +43,10 @@ func (dao *ProductDao) GetBossById(uId uint) (user *model.User, err error) {
 		First(user).Error
 	return
 }
+
+func (dao *ProductDao) ShowProduct(id uint) (*model.Product, error) {
+	var product model.Product
+	err := dao.DB.Model(&model.Product{}).Where("id = ?", id).
+		First(&product).Error
+	return &product, err
+}
