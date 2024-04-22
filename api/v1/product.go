@@ -94,7 +94,7 @@ func UpdateProjectHandler() gin.HandlerFunc {
 			return
 		}
 		l := service.GetProductSrv()
-		resp, err := l.UpdateProject(ctx, &req)
+		resp, err := l.UpdateProduct(ctx.Request.Context(), &req)
 		if err != nil {
 			log.LogrusObj.Error("UpdateProduct is wrong")
 			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))

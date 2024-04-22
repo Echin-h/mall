@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	conf "gin-mall/conf/sql"
 	"gin-mall/consts"
 	"gin-mall/pkg/util/ctl"
@@ -174,7 +175,7 @@ func (s *ProductSrv) ProductShow(ctx context.Context, req *types.ProductShowReq)
 	return
 }
 
-func (s *ProductSrv) UpdateProject(ctx context.Context, req *types.ProductUpdateReq) (resp interface{}, err error) {
+func (s *ProductSrv) UpdateProduct(ctx context.Context, req *types.ProductUpdateReq) (resp interface{}, err error) {
 	//u, err := ctl.GetUserInfo(ctx)
 	//if err != nil {
 	//	log.LogrusObj.Error(err)
@@ -184,6 +185,11 @@ func (s *ProductSrv) UpdateProject(ctx context.Context, req *types.ProductUpdate
 	//	log.LogrusObj.Infoln("no auth")
 	//	return nil, err
 	//}
+	u, _ := ctl.GetUserInfo(ctx)
+	if u.Id != req.BossID {
+		log.LogrusObj.Infoln("no auth")
+		return nil, errors.New("no auth")
+	}
 	product := &model.Product{
 		Name:       req.Name,
 		CategoryID: req.CategoryID,
