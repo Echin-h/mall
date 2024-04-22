@@ -57,3 +57,9 @@ func (dao *ProductDao) UpdateProduct(id uint, product *model.Product) (err error
 
 	return
 }
+
+func (dao *ProductDao) DeleteProduct(rid uint, bid uint) (err error) {
+	return dao.DB.Model(&model.Product{}).
+		Where("id = ? and boss_id = ?", rid, bid).
+		Delete(&model.Product{}).Error
+}

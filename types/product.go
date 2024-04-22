@@ -58,3 +58,8 @@ type ProductUpdateReq struct {
 	Num           int    `form:"num" json:"num"`
 	BossID        uint   `form:"boss_id" json:"boss_id"`
 }
+
+type ProductDeleteReq struct {
+	ID uint `form:"id" json:"id"`
+	BasePage
+}

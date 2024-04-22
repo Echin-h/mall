@@ -103,3 +103,22 @@ func UpdateProjectHandler() gin.HandlerFunc {
 		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
 	}
 }
+
+func DeleteProductHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.ProductDeleteReq
+		if err := ctx.ShouldBindJSON(&req); err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			return
+		}
+		l := service.GetProductSrv()
+		resp, err := l.ProductDelete(ctx.Request.Context(), &req)
+		if err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			return
+		}
+		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
+	}
+}

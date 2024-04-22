@@ -203,3 +203,13 @@ func (s *ProductSrv) UpdateProject(ctx context.Context, req *types.ProductUpdate
 
 	return product, nil
 }
+
+func (s *ProductSrv) ProductDelete(ctx context.Context, req *types.ProductDeleteReq) (resp interface{}, err error) {
+	u, _ := ctl.GetUserInfo(ctx)
+	err = dao.NewProductDao(ctx).DeleteProduct(req.ID, u.Id)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+	return
+}
