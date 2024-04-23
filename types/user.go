@@ -37,3 +37,16 @@ type UserInfoUpdateReq struct {
 	// 很好奇是不是
 	// 我也很好奇啊
 }
+
+type UserInfoShowReq struct{}
+
+type SendEmailServiceReq struct {
+	Email    string `form:"email" json:"email"`
+	Password string `form:"password" json:"password"`
+	// OpertionType 1:绑定邮箱 2：解绑邮箱 3：改密码
+	OperationType uint `form:"operation_type" json:"operation_type"`
+}
+
+type ValidEmailReq struct {
+	Token string `json:"token" form:"token"`
+}

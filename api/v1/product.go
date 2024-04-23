@@ -17,7 +17,7 @@ func ListProductsHandler() gin.HandlerFunc {
 		var req types.ProductListReq
 		if err := ctx.ShouldBindWith(&req, binding.JSON); err != nil {
 			log.LogrusObj.Error(err)
-			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
 			return
 		}
 		if req.PageSize == 0 {
@@ -28,7 +28,7 @@ func ListProductsHandler() gin.HandlerFunc {
 		resp, err := l.ProductList(ctx.Request.Context(), &req)
 		if err != nil {
 			log.LogrusObj.Error(err)
-			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
 			return
 		}
 		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
@@ -42,7 +42,7 @@ func CreateProductHandler() gin.HandlerFunc {
 		var req types.ProductCreateReq
 		if err := ctx.ShouldBindJSON(&req); err != nil {
 			log.LogrusObj.Error(err)
-			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
 			return
 		}
 		// 传入多个图片,一般来说 form 与 json 不要写在一起
@@ -56,7 +56,7 @@ func CreateProductHandler() gin.HandlerFunc {
 		resp, err := l.ProductCreate(ctx.Request.Context(), files, &req)
 		if err != nil {
 			log.LogrusObj.Error(err)
-			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
 			return
 		}
 		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
@@ -68,7 +68,7 @@ func ShowProductHandler() gin.HandlerFunc {
 		var req types.ProductShowReq
 		if err := ctx.ShouldBindJSON(&req); err != nil {
 			log.LogrusObj.Error(err)
-			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
 			return
 		}
 
@@ -76,7 +76,7 @@ func ShowProductHandler() gin.HandlerFunc {
 		resp, err := l.ProductShow(ctx.Request.Context(), &req)
 		if err != nil {
 			log.LogrusObj.Error(err)
-			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
 			return
 		}
 		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
@@ -90,14 +90,14 @@ func UpdateProjectHandler() gin.HandlerFunc {
 		var req types.ProductUpdateReq
 		if err := ctx.ShouldBindJSON(&req); err != nil {
 			log.LogrusObj.Error("json parse error")
-			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
 			return
 		}
 		l := service.GetProductSrv()
 		resp, err := l.UpdateProduct(ctx.Request.Context(), &req)
 		if err != nil {
 			log.LogrusObj.Error("UpdateProduct is wrong")
-			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
 			return
 		}
 		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
@@ -109,14 +109,14 @@ func DeleteProductHandler() gin.HandlerFunc {
 		var req types.ProductDeleteReq
 		if err := ctx.ShouldBindJSON(&req); err != nil {
 			log.LogrusObj.Error(err)
-			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
 			return
 		}
 		l := service.GetProductSrv()
 		resp, err := l.ProductDelete(ctx.Request.Context(), &req)
 		if err != nil {
 			log.LogrusObj.Error(err)
-			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
 			return
 		}
 		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))

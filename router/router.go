@@ -38,9 +38,9 @@ func NewRouter() *gin.Engine {
 		{
 			// 用户操作
 			authed.POST("user/update", api.UserUpdateHandler())
-			//authed.GET("user/show_info", api.ShowUserInfoHandler())
-			//authed.POST("user/send_email", api.SendEmailHandler())
-			//authed.GET("user/valid_email", api.ValidEmailHandler())
+			authed.GET("user/show_info", api.ShowUserInfoHandler())
+			authed.POST("user/send_email", api.SendEmailHandler())
+			authed.GET("user/valid_email", api.ValidEmailHandler())
 			//authed.POST("user/following", api.UserFollowingHandler())
 			//authed.POST("user/unfollowing", api.UserUnFollowingHandler())
 			//authed.POST("user/avatar", api.UploadAvatarHandler()) // 上传头像

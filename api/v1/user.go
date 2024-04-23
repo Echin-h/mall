@@ -25,7 +25,7 @@ func UserRegisterHandler() gin.HandlerFunc {
 		if req.Key == "" || len(req.Key) != consts.EncryptMoneyKeyLength {
 			log.LogrusObj.WithField("key", req.Key).Error("key长度错误,必须是6位数")
 			err := errors.New("key长度错误,必须是6位数")
-			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
 			return
 		}
 		// 单例化操作
@@ -33,7 +33,7 @@ func UserRegisterHandler() gin.HandlerFunc {
 		resp, err := l.UserRegister(ctx.Request.Context(), &req)
 		if err != nil {
 			log.LogrusObj.Infoln(err)
-			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
 			return
 		}
 		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
@@ -67,7 +67,7 @@ func UserUpdateHandler() gin.HandlerFunc {
 		var req types.UserInfoUpdateReq
 		if err := ctx.ShouldBindWith(&req, binding.JSON); err != nil {
 			log.LogrusObj.Error(err)
-			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
 			return
 		}
 		// 单例化操作
@@ -75,10 +75,70 @@ func UserUpdateHandler() gin.HandlerFunc {
 		resp, err := l.UserUpdate(ctx.Request.Context(), &req)
 		if err != nil {
 			log.LogrusObj.Infoln(err)
-			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
 			return
 		}
 
+		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
+	}
+}
+
+func ShowUserInfoHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.UserInfoShowReq
+		if err := ctx.ShouldBind(&req); err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
+			return
+		}
+		l := service.GetUserSrv()
+		resp, err := l.UserInfoShow(ctx.Request.Context(), &req)
+		if err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
+			return
+		}
+		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
+	}
+}
+
+func SendEmailHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.SendEmailServiceReq
+		if err := ctx.ShouldBind(&req); err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
+			return
+		}
+		l := service.GetUserSrv()
+		resp, err := l.SendEmail(ctx.Request.Context(), &req)
+		if err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
+			return
+		}
+		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
+
+	}
+}
+
+func ValidEmailHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.ValidEmailReq
+		if err := ctx.ShouldBind(&req); err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
+			return
+		}
+		t := ctx.GetHeader("token")
+		req.Token = t
+		l := service.GetUserSrv()
+		resp, err := l.ValidEmail(ctx.Request.Context(), &req)
+		if err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
+			return
+		}
 		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
 	}
 }
