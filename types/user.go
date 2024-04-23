@@ -50,3 +50,7 @@ type SendEmailServiceReq struct {
 type ValidEmailReq struct {
 	Token string `json:"token" form:"token"`
 }
+
+type UserFollowingReq struct {
+	Id uint `json:"id" form:"id"`
+}

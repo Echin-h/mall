@@ -247,3 +247,15 @@ func (s *UserSrv) ValidEmail(ctx context.Context, req *types.ValidEmailReq) (res
 	return
 
 }
+
+func (s *UserSrv) UserFollow(ctx context.Context, req *types.UserFollowingReq) (resp interface{}, err error) {
+	u, err := ctl.GetUserInfo(ctx)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return nil, err
+	}
+
+	err = dao.NewFollowDao(ctx).Follow(u.Id, req.Id)
+
+	return
+}
