@@ -52,8 +52,8 @@ func NewRouter() *gin.Engine {
 
 			// 收藏夹
 			authed.GET("favorites/list", api.ListFavoritesHandler())
-			//authed.POST("favorites/create", api.CreateFavoriteHandler())
-			//authed.POST("favorites/delete", api.DeleteFavoriteHandler())
+			authed.POST("favorites/create", api.CreateFavoritesHandler())
+			//authed.POST("favorites/delete", api.DeleteFavoritesHandler())
 
 		}
 	}

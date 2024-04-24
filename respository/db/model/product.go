@@ -6,10 +6,12 @@ import (
 	"strconv"
 )
 
+// TODO: 这里是CategoryID,但是columnName = category 而不是 category_id
+
 type Product struct {
 	gorm.Model
 	Name          string `gorm:"size:255;index"`
-	CategoryID    uint   `gorm:"not null"`
+	CategoryID    uint   `gorm:"not null;column:category_id"`
 	Title         string
 	Info          string `gorm:"size:1000"`
 	ImgPath       string

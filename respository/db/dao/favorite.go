@@ -54,3 +54,18 @@ func (dao *FavoritesDao) ListFavoritesByUserId(uid uint, pageNum int, pageSize i
 
 	return
 }
+
+func (dao *FavoritesDao) FavoriteExistOrNot(uid uint, productId uint) (bool, error) {
+	var count int64
+	err := dao.DB.Model(&model.Favorite{}).
+		Where("user_id = ? AND product_id = ?", uid, productId).
+		Count(&count).Error
+	if count == 0 || err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func (dao *FavoritesDao) CreateFavorite(favorite *model.Favorite) error {
+	return dao.DB.Create(&favorite).Error
+}

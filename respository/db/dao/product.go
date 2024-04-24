@@ -80,3 +80,9 @@ func (dao *ProductDao) CountSearchProduct(keyword string) (total int64, err erro
 		Where("name like ?", "%"+keyword+"%").Count(&total).Error
 	return
 }
+
+func (dao *ProductDao) GetProductById(id uint) (product *model.Product, err error) {
+	err = dao.DB.Model(&model.Product{}).Where("id = ?", id).
+		First(&product).Error
+	return
+}

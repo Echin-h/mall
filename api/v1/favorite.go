@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"errors"
 	"gin-mall/consts"
 	"gin-mall/pkg/util/ctl"
 	"gin-mall/pkg/util/log"
@@ -24,6 +25,32 @@ func ListFavoritesHandler() gin.HandlerFunc {
 
 		l := service.GetFavoriteSrv()
 		resp, err := l.FavoritesList(ctx.Request.Context(), &req)
+		if err != nil {
+			log.LogrusObj.Infoln(err)
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
+			return
+		}
+
+		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
+	}
+}
+
+func CreateFavoritesHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.FavoriteCreateReq
+		if err := ctx.ShouldBind(&req); err != nil {
+			log.LogrusObj.Infoln(err)
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
+			return
+		}
+
+		if req.ProductId == 0 || req.BossId == 0 {
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, errors.New("params error")))
+			return
+		}
+
+		l := service.GetFavoriteSrv()
+		resp, err := l.FavoriteCreate(ctx.Request.Context(), &req)
 		if err != nil {
 			log.LogrusObj.Infoln(err)
 			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))

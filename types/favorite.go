@@ -25,3 +25,10 @@ type FavoriteListResp struct {
 	Num           int    `json:"num"`
 	OnSale        bool   `json:"on_sale"`
 }
+
+type FavoriteCreateReq struct {
+	ProductId  uint `form:"product_id" json:"product_id"`
+	BossId     uint `form:"boss_id" json:"boss_id"`
+	FavoriteId uint `form:"favorite_id" json:"favorite_id"`
+	BasePage
+}
