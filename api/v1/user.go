@@ -3,6 +3,7 @@ package v1
 import (
 	"errors"
 	"gin-mall/consts"
+	"gin-mall/pkg/e"
 	"gin-mall/pkg/util/ctl"
 	"gin-mall/pkg/util/log"
 	"gin-mall/service"
@@ -180,6 +181,27 @@ func UserUnFollowingHandler() gin.HandlerFunc {
 			return
 		}
 
+		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
+	}
+}
+
+func UploadAvatarHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		file, fileHeader, _ := ctx.Request.FormFile("file")
+		if fileHeader == nil {
+			err := errors.New(e.GetMsg(e.ErrorUploadFile))
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
+			return
+		}
+
+		l := service.GetUserSrv()
+		resp, err := l.UserAvatarUpload(ctx.Request.Context(), file)
+		if err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
+			return
+		}
 		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
 	}
 }

@@ -10,9 +10,11 @@ import (
 	"gin-mall/pkg/util/email"
 	"gin-mall/pkg/util/jwt"
 	"gin-mall/pkg/util/log"
+	"gin-mall/pkg/util/upload"
 	"gin-mall/respository/db/dao"
 	"gin-mall/respository/db/model"
 	"gin-mall/types"
+	"mime/multipart"
 	"sync"
 )
 
@@ -272,6 +274,41 @@ func (s *UserSrv) UserUnFollow(ctx context.Context, req *types.UserFollowingReq)
 	}
 
 	err = dao.NewFollowDao(ctx).UnFollow(u.Id, req.Id)
+
+	return
+}
+
+func (s *UserSrv) UserAvatarUpload(ctx context.Context, file multipart.File) (resp interface{}, err error) {
+	u, err := ctl.GetUserInfo(ctx)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+
+	userDao := dao.NewUserDao(ctx)
+	user, err := userDao.GetUserById(u.Id)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+
+	var path string
+	if conf.Config.System.UploadModel == consts.UploadModelLocal {
+		path, err = upload.AvatarUploadToLocalStatic(file, u.Id, user.UserName)
+	} else {
+		// oss 操作
+	}
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+
+	user.Avatar = path
+	err = userDao.UpdateUserById(u.Id, user)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
 
 	return
 }

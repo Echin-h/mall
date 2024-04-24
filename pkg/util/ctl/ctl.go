@@ -64,7 +64,6 @@ func RespError(ctx *gin.Context, err error, data string, code ...int) *TrackedEr
 	return r
 }
 
-// TODO: 为什么要用track id
 func getTrackIdFromCtx(ctx *gin.Context) (string, error) {
 	spanCtxInterface, _ := ctx.Get(consts.SpanCTX)
 	str := fmt.Sprintf("%v", spanCtxInterface)

@@ -55,3 +55,23 @@ func CreateDir(basePath string) bool {
 	}
 	return true
 }
+
+func AvatarUploadToLocalStatic(file multipart.File, uid uint, userName string) (string, error) {
+	bId := strconv.Itoa(int(uid))
+	basePath := "." + conf.Config.PhotoPath.AvatarPath + "user" + bId + "/"
+	if !DirExistOrNot(basePath) {
+		CreateDir(basePath)
+	}
+	avatarPath := fmt.Sprintf("%s%s.jpg", basePath, userName)
+	conten, err := ioutil.ReadAll(file)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return "", err
+	}
+	err = ioutil.WriteFile(avatarPath, conten, 0666)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return "", err
+	}
+	return fmt.Sprintf("user%s/%s.jpg", bId, userName), err
+}
