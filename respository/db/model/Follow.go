@@ -1,12 +1,15 @@
 package model
 
+import "gorm.io/gorm"
+
 type Follow struct {
 	ID           uint `gorm:"primaryKey"`
 	User         User `gorm:"foreignKey:FollowId"` // 关注人
 	FollowId     uint
 	FollowedUser User `gorm:"foreignKey:UserId"` // 被关注人
 	UserId       uint
-	CreateTime   uint `gorm:"autoCreateTime"`
+	CreateTime   uint           `gorm:"autoCreateTime"`
+	DeleteAt     gorm.DeletedAt `gorm:"index"`
 }
 
 /*

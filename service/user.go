@@ -21,7 +21,10 @@ var UserSrvOnce sync.Once
 
 type UserSrv struct{}
 
+// 个人觉得在controller层记录log后不需要在srv层记录log
+
 // 单例化操作，保证了某个操作只能使用一次
+
 func GetUserSrv() *UserSrv {
 	UserSrvOnce.Do(func() {
 		UserSrvIns = &UserSrv{}
@@ -256,6 +259,19 @@ func (s *UserSrv) UserFollow(ctx context.Context, req *types.UserFollowingReq) (
 	}
 
 	err = dao.NewFollowDao(ctx).Follow(u.Id, req.Id)
+
+	return
+}
+
+func (s *UserSrv) UserUnFollow(ctx context.Context, req *types.UserFollowingReq) (resp interface{}, err error) {
+	u, err := ctl.GetUserInfo(ctx)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		err = errors.New("no Info from ctx")
+		return
+	}
+
+	err = dao.NewFollowDao(ctx).UnFollow(u.Id, req.Id)
 
 	return
 }

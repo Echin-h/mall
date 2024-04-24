@@ -30,3 +30,17 @@ func (dao *FollowDao) Follow(uId uint, FollowId uint) (err error) {
 	err = dao.DB.Model(&model.Follow{}).Create(&f).Error
 	return
 }
+
+func (dao *FollowDao) UnFollow(uid uint, unfollowId uint) (err error) {
+	var count int64
+	dao.DB.Model(&model.Follow{}).Where("user_id = ? AND follow_id = ?", uid, unfollowId).Count(&count)
+	if count == 0 {
+		err = errors.New("你本身没关注")
+		return
+	}
+
+	var f model.Follow
+	err = dao.DB.Model(&model.Follow{}).Where("user_id = ? AND follow_id = ?", uid, unfollowId).Delete(&f).Error
+
+	return
+}
