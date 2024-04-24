@@ -63,3 +63,20 @@ func (dao *ProductDao) DeleteProduct(rid uint, bid uint) (err error) {
 		Where("id = ? and boss_id = ?", rid, bid).
 		Delete(&model.Product{}).Error
 }
+
+func (dao *ProductDao) SearchProduct(keyword string, page types.BasePage) (products []*model.Product, err error) {
+	err = dao.DB.Model(&model.Product{}).Where("name like ?", "%"+keyword+"%").
+		Offset((page.PageNum - 1) * page.PageSize).
+		Limit(page.PageSize).
+		Find(&products).Error
+	if err != nil {
+		return
+	}
+	return
+}
+
+func (dao *ProductDao) CountSearchProduct(keyword string) (total int64, err error) {
+	err = dao.DB.Model(&model.Product{}).
+		Where("name like ?", "%"+keyword+"%").Count(&total).Error
+	return
+}

@@ -219,3 +219,45 @@ func (s *ProductSrv) ProductDelete(ctx context.Context, req *types.ProductDelete
 	}
 	return
 }
+
+// 搜索商品 TODO 后续用脚本同步数据MySQL到ES，用ES进行搜索
+
+func (s *ProductSrv) ProductSearch(ctx context.Context, req *types.ProductSearchReq) (resp interface{}, err error) {
+	productDao := dao.NewProductDao(ctx)
+	products, err := productDao.SearchProduct(req.Name, req.BasePage)
+	total, err := productDao.CountSearchProduct(req.Name)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+	pRespList := make([]*types.ProductResp, 0)
+	for _, p := range products {
+		pResp := &types.ProductResp{
+			ID:            p.ID,
+			Name:          p.Name,
+			CategoryID:    p.CategoryID,
+			Title:         p.Title,
+			Info:          p.Info,
+			ImgPath:       p.ImgPath,
+			Price:         p.Price,
+			DiscountPrice: p.DiscountPrice,
+			View:          p.View(),
+			CreatedAt:     p.CreatedAt.Unix(),
+			Num:           p.Num,
+			OnSale:        p.OnSale,
+			BossID:        p.BossID,
+			BossName:      p.BossName,
+			BossAvatar:    p.BossAvatar,
+		}
+		if conf.Config.System.UploadModel == consts.UploadModelLocal {
+			pResp.BossAvatar = conf.Config.PhotoPath.PhotoHost + conf.Config.System.HttpPort + conf.Config.PhotoPath.AvatarPath + pResp.BossAvatar
+			pResp.ImgPath = conf.Config.PhotoPath.PhotoHost + conf.Config.System.HttpPort + conf.Config.PhotoPath.ProductPath + pResp.ImgPath
+		}
+		pRespList = append(pRespList, pResp)
+	}
+	resp = &types.DataListResp{
+		Item:  pRespList,
+		Total: total,
+	}
+	return
+}

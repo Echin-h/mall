@@ -122,3 +122,26 @@ func DeleteProductHandler() gin.HandlerFunc {
 		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
 	}
 }
+
+func SearchProductsHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.ProductSearchReq
+		if err := ctx.ShouldBindJSON(&req); err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
+			return
+		}
+		if req.PageSize == 0 {
+			req.PageSize = consts.BaseProductPageSize
+		}
+
+		l := service.GetProductSrv()
+		resp, err := l.ProductSearch(ctx.Request.Context(), &req)
+		if err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
+			return
+		}
+		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
+	}
+}
