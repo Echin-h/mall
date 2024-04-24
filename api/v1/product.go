@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"errors"
 	"fmt"
 	"gin-mall/consts"
 	"gin-mall/pkg/util/ctl"
@@ -137,6 +138,45 @@ func SearchProductsHandler() gin.HandlerFunc {
 
 		l := service.GetProductSrv()
 		resp, err := l.ProductSearch(ctx.Request.Context(), &req)
+		if err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
+			return
+		}
+		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
+	}
+}
+
+func ListProductImgHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.ListProductImgReq
+		if err := ctx.ShouldBind(&req); err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
+			return
+		}
+
+		if req.ID == 0 {
+			err := errors.New("参数错误，不能为空")
+			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			return
+		}
+
+		l := service.GetProductSrv()
+		resp, err := l.ProductImgList(ctx.Request.Context(), &req)
+		if err != nil {
+			log.LogrusObj.Error(err)
+			ctx.JSON(http.StatusOK, ErrorResponse(ctx, err))
+			return
+		}
+		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
+	}
+}
+
+func ListCategoryHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		l := service.GetCategorySrv()
+		resp, err := l.CategoryList(ctx.Request.Context())
 		if err != nil {
 			log.LogrusObj.Error(err)
 			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))

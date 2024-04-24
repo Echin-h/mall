@@ -15,6 +15,10 @@ func NewFollowDao(ctx context.Context) *FollowDao {
 	return &FollowDao{NewDBClient(ctx)}
 }
 
+func NewFollowDaoByDB(db *gorm.DB) *FollowDao {
+	return &FollowDao{db}
+}
+
 func (dao *FollowDao) Follow(uId uint, FollowId uint) (err error) {
 	var count int64
 	dao.DB.Model(&model.Follow{}).Where("user_id = ? AND follow_id = ?", uId, FollowId).Count(&count)

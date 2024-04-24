@@ -261,3 +261,19 @@ func (s *ProductSrv) ProductSearch(ctx context.Context, req *types.ProductSearch
 	}
 	return
 }
+
+func (s *ProductSrv) ProductImgList(ctx context.Context, req *types.ListProductImgReq) (resp interface{}, err error) {
+	productImg, _ := dao.NewProductImgDao(ctx).ListProductImgByProductId(req.ID)
+	for i := range productImg {
+		if conf.Config.System.UploadModel == consts.UploadModelLocal {
+			productImg[i].ImgPath = conf.Config.PhotoPath.PhotoHost + conf.Config.System.HttpPort + conf.Config.PhotoPath.ProductPath + productImg[i].ImgPath
+		}
+	}
+
+	resp = &types.DataListResp{
+		Item:  productImg,
+		Total: int64(len(productImg)),
+	}
+
+	return
+}

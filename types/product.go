@@ -75,3 +75,7 @@ type ProductSearchReq struct {
 	OnSale        bool   `form:"on_sale" json:"on_sale"`
 	BasePage
 }
+
+type ListProductImgReq struct {
+	ID uint `json:"id" form:"id"`
+}

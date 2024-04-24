@@ -42,9 +42,9 @@ cache:
 
 email:
   address: http://localhost:8080/#/vaild/email/
-  smtpHost:
-  smtpEmail:
-  smtpPass:
+  smtpHost: smtp.qq.com
+  smtpEmail: 197795131@qq.com
+  smtpPass: fkbzijmleupfcahf
 
 encryptSecret:
   jwtSecret: "tokenSecret"
