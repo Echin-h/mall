@@ -23,11 +23,6 @@ type ProductResp struct {
 	BossAvatar    string `json:"boss_avatar"`
 }
 
-type DataListResp struct {
-	Item  interface{} `json:"item"`
-	Total int64       `json:"total"`
-}
-
 type ProductCreateReq struct {
 	ID            uint   `form:"id" json:"id"`
 	Name          string `form:"name" json:"name"`
