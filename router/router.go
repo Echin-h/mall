@@ -78,7 +78,7 @@ func NewRouter() *gin.Engine {
 			//authed.POST("paydown", api.OrderPaymentHandler())
 			//
 			//// 显示金额
-			//authed.POST("money", api.ShowMoneyHandler())
+			authed.POST("money", api.ShowMoneyHandler())
 			//
 			//// 秒杀专场
 			//authed.POST("skill_product/init", api.InitSkillProductHandler())
