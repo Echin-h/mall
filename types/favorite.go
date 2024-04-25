@@ -32,3 +32,7 @@ type FavoriteCreateReq struct {
 	FavoriteId uint `form:"favorite_id" json:"favorite_id"`
 	BasePage
 }
+
+type FavoriteDeleteReq struct {
+	Id uint `form:"id" json:"id"`
+}

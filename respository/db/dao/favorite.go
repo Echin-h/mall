@@ -69,3 +69,7 @@ func (dao *FavoritesDao) FavoriteExistOrNot(uid uint, productId uint) (bool, err
 func (dao *FavoritesDao) CreateFavorite(favorite *model.Favorite) error {
 	return dao.DB.Create(&favorite).Error
 }
+
+func (dao *FavoritesDao) DeleteFavoriteById(favoriteId uint) error {
+	return dao.DB.Where("id = ?", favoriteId).Delete(&model.Favorite{}).Error
+}

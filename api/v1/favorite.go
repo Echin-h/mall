@@ -60,3 +60,24 @@ func CreateFavoritesHandler() gin.HandlerFunc {
 		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
 	}
 }
+
+func DeleteFavoritesHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.FavoriteDeleteReq
+		if err := ctx.ShouldBind(&req); err != nil {
+			log.LogrusObj.Infoln(err)
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(ctx, err))
+			return
+		}
+
+		l := service.GetFavoriteSrv()
+		resp, err := l.FavoriteDelete(ctx.Request.Context(), &req)
+		if err != nil {
+			log.LogrusObj.Infoln(err)
+			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))
+			return
+		}
+
+		ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, resp))
+	}
+}

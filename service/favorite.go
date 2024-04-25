@@ -108,3 +108,14 @@ func (s *FavoriteSrv) FavoriteCreate(ctx context.Context, req *types.FavoriteCre
 
 	return
 }
+
+func (s *FavoriteSrv) FavoriteDelete(ctx context.Context, req *types.FavoriteDeleteReq) (resp interface{}, err error) {
+	favorDao := dao.NewFavoritesDao(ctx)
+	err = favorDao.DeleteFavoriteById(req.Id)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+
+	return
+}
