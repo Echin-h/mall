@@ -34,3 +34,11 @@ type OrderListResp struct {
 	ImgPath       string `json:"img_path"`
 	DiscountPrice string `json:"discount_price"`
 }
+
+type OrderShowReq struct {
+	OrderId uint `json:"order_id" form:"order_id"`
+}
+
+type OrderDeleteReq struct {
+	OrderId uint `json:"order_id" form:"order_id"`
+}

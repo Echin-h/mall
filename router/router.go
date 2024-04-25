@@ -58,8 +58,8 @@ func NewRouter() *gin.Engine {
 			// 订单操作
 			authed.POST("orders/create", api.CreateOrderHandler())
 			authed.GET("orders/list", api.ListOrdersHandler())
-			//authed.GET("orders/show", api.ShowOrderHandler())
-			//authed.POST("orders/delete", api.DeleteOrderHandler())
+			authed.GET("orders/show", api.ShowOrderHandler())
+			authed.POST("orders/delete", api.DeleteOrderHandler())
 
 			// 购物车
 			//authed.POST("carts/create", api.CreateCartHandler())

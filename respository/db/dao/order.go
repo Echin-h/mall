@@ -60,3 +60,33 @@ func (dao *OrderDao) GetOrderList(uid uint, req *types.OrderListReq) (orders []*
 
 	return
 }
+
+func (dao *OrderDao) ShowOrderById(id, uId uint) (r *types.OrderListResp, err error) {
+	err = dao.DB.Model(&model.Order{}).
+		Joins("AS o LEFT JOIN product AS p ON p.id = o.product_id").
+		Joins("LEFT JOIN address AS a ON a.id = o.address_id").
+		Where("o.id = ? AND o.user_id = ?", id, uId).
+		Select("o.id AS id," +
+			"o.order_num AS order_num," +
+			"UNIX_TIMESTAMP(o.created_at) AS created_at," +
+			"UNIX_TIMESTAMP(o.updated_at) AS updated_at," +
+			"o.user_id AS user_id," +
+			"o.product_id AS product_id," +
+			"o.boss_id AS boss_id," +
+			"o.num AS num," +
+			"o.type AS type," +
+			"p.name AS name," +
+			"p.discount_price AS discount_price," +
+			"p.img_path AS img_path," +
+			"a.name AS address_name," +
+			"a.phone AS address_phone," +
+			"a.address AS address").
+		Find(&r).Error
+
+	return
+}
+
+func (dao *OrderDao) DeleteOrderById(id, uId uint) (err error) {
+	return dao.DB.Where("id = ? AND user_id = ?", id, uId).
+		Delete(&model.Order{}).Error
+}

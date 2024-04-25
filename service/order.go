@@ -3,6 +3,8 @@ package service
 import (
 	"context"
 	"fmt"
+	conf "gin-mall/conf/sql"
+	"gin-mall/consts"
 	"gin-mall/pkg/util/ctl"
 	"gin-mall/pkg/util/log"
 	"gin-mall/respository/cache"
@@ -93,6 +95,43 @@ func (s *OrderSrv) OrderList(ctx context.Context, req *types.OrderListReq) (resp
 	resp = types.DataListResp{
 		Item:  orders,
 		Total: total,
+	}
+
+	return
+}
+
+func (s OrderSrv) OrderShow(ctx context.Context, req *types.OrderShowReq) (resp interface{}, err error) {
+	u, err := ctl.GetUserInfo(ctx)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return nil, err
+	}
+	order, err := dao.NewOrderDao(ctx).ShowOrderById(req.OrderId, u.Id)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+
+	if conf.Config.System.UploadModel == consts.UploadModelLocal {
+		order.ImgPath = conf.Config.PhotoPath.PhotoHost + conf.Config.System.HttpPort + conf.Config.PhotoPath.ProductPath + order.ImgPath
+	}
+
+	resp = order
+
+	return
+}
+
+func (s *OrderSrv) OrderDelete(ctx context.Context, req *types.OrderDeleteReq) (resp interface{}, err error) {
+	u, err := ctl.GetUserInfo(ctx)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+
+	err = dao.NewOrderDao(ctx).DeleteOrderById(req.OrderId, u.Id)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
 	}
 
 	return
