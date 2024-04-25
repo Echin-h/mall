@@ -1,11 +1,15 @@
 package model
 
-import "gorm.io/gorm"
+import (
+	"time"
+)
 
 // 订单
 
 type Order struct {
-	gorm.Model
+	ID        uint `gorm:"primarykey"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
 	UserID    uint `gorm:"not null"`
 	ProductID uint `gorm:"not null"`
 	BossID    uint `gorm:"not null"`

@@ -14,10 +14,10 @@ var RedisContext = context.Background()
 func InitCache() {
 	rConfig := sql.Config.Redis
 	cl := redis.NewClient(&redis.Options{
-		Addr:     fmt.Sprintf("%s:%s", rConfig.RedisHost, rConfig.RedisPort),
-		Username: rConfig.RedisUsername,
-		Password: rConfig.RedisPassword,
-		DB:       rConfig.RedisDbName,
+		Addr: fmt.Sprintf("%s:%s", rConfig.RedisHost, rConfig.RedisPort),
+		//Username: rConfig.RedisUsername,
+		//Password: rConfig.RedisPassword,
+		DB: rConfig.RedisDbName,
 	})
 	_, err := cl.Ping(RedisContext).Result()
 	if err != nil {

@@ -24,13 +24,12 @@ services:
     image: redis:latest
     restart: always
     environment:
-      - REDIS_PASSWORD=123456
       - REDIS_DB_NAME=4
-      - ALLOW_EMPTY_PASSWORD=no
     volumes:
       - /usr/local/redis:/usr/local/redis
     ports:
       - "6379:6379"
+    command: redis-server --requirepass ""
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:latest

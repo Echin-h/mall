@@ -31,7 +31,7 @@ redis:
   redisHost: 127.0.0.1
   redisPort: 6379
   redisUserName:
-  redisPassword: 123456
+  redisPassword:
   redisNetwork: "tcp"
 
 cache:
