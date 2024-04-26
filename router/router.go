@@ -68,19 +68,19 @@ func NewRouter() *gin.Engine {
 			authed.POST("carts/delete", api.DeleteCartHandler())
 
 			// 收获地址操作
-			//authed.POST("addresses/create", api.CreateAddressHandler())
-			//authed.GET("addresses/show", api.ShowAddressHandler())
-			//authed.GET("addresses/list", api.ListAddressHandler())
-			//authed.POST("addresses/update", api.UpdateAddressHandler())
-			//authed.POST("addresses/delete", api.DeleteAddressHandler())
-			//
-			//// 支付功能
+			authed.POST("addresses/create", api.CreateAddressHandler())
+			authed.GET("addresses/show", api.ShowAddressHandler())
+			authed.GET("addresses/list", api.ListAddressHandler())
+			authed.POST("addresses/update", api.UpdateAddressHandler())
+			authed.POST("addresses/delete", api.DeleteAddressHandler())
+
+			// 支付功能
 			//authed.POST("paydown", api.OrderPaymentHandler())
 			//
-			//// 显示金额
+			// 显示金额
 			authed.POST("money", api.ShowMoneyHandler())
 			//
-			//// 秒杀专场
+			// 秒杀专场
 			//authed.POST("skill_product/init", api.InitSkillProductHandler())
 			//authed.GET("skill_product/list", api.ListSkillProductHandler())
 			//authed.GET("skill_product/show", api.GetSkillProductHandler())
