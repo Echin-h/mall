@@ -66,3 +66,37 @@ func (s *CartSrv) ListCart(ctx context.Context, req *types.CartListReq) (resp in
 
 	return
 }
+
+// 其实应该检测一下 num 是否大于 numMax
+
+func (s *CartSrv) UpdateCart(ctx context.Context, req *types.UpdateCartServiceReq) (resp interface{}, err error) {
+	u, err := ctl.GetUserInfo(ctx)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+
+	err = dao.NewCartDao(ctx).UpdateCartById(u.Id, req)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+
+	return
+}
+
+func (s *CartSrv) DeleteCart(ctx context.Context, req *types.DeleteCartReq) (resp interface{}, err error) {
+	u, err := ctl.GetUserInfo(ctx)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+
+	err = dao.NewCartDao(ctx).DeleteCartById(u.Id, req.Id)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+
+	return
+}

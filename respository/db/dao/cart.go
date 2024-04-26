@@ -78,3 +78,18 @@ func (dao *CartDao) ListCart(uid uint, req *types.CartListReq) (carts []*types.C
 
 	return
 }
+
+func (dao *CartDao) UpdateCartById(uid uint, req *types.UpdateCartServiceReq) (err error) {
+	err = dao.DB.Model(&model.Cart{}).
+		Where("id = ? AND user_id = ?", req.Id, uid).
+		Update("num", req.Num).Error
+
+	return
+}
+
+func (dao *CartDao) DeleteCartById(uid uint, cid uint) (err error) {
+	err = dao.DB.Model(&model.Cart{}).
+		Where("id = ? AND user_id = ?", cid, uid).
+		Delete(&model.Cart{}).Error
+	return
+}

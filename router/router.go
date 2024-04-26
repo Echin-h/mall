@@ -64,10 +64,10 @@ func NewRouter() *gin.Engine {
 			// 购物车
 			authed.POST("carts/create", api.CreateCartHandler())
 			authed.GET("carts/list", api.ListCartHandler())
-			//authed.POST("carts/update", api.UpdateCartHandler()) // 购物车id
-			//authed.POST("carts/delete", api.DeleteCartHandler())
-			//
-			//// 收获地址操作
+			authed.POST("carts/update", api.UpdateCartHandler()) // 购物车id
+			authed.POST("carts/delete", api.DeleteCartHandler())
+
+			// 收获地址操作
 			//authed.POST("addresses/create", api.CreateAddressHandler())
 			//authed.GET("addresses/show", api.ShowAddressHandler())
 			//authed.GET("addresses/list", api.ListAddressHandler())

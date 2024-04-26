@@ -29,3 +29,12 @@ type CartResp struct {
 	BossName      string `json:"boss_name"`
 	Info          string `json:"info"`
 }
+
+type UpdateCartServiceReq struct {
+	Id  uint `form:"id" json:"id"`
+	Num uint `form:"num" json:"num"`
+}
+
+type DeleteCartReq struct {
+	Id uint `form:"id" json:"id"`
+}
