@@ -75,11 +75,11 @@ func NewRouter() *gin.Engine {
 			authed.POST("addresses/delete", api.DeleteAddressHandler())
 
 			// 支付功能
-			//authed.POST("paydown", api.OrderPaymentHandler())
-			//
+			authed.POST("pay", api.OrderPaymentHandler())
+
 			// 显示金额
 			authed.POST("money", api.ShowMoneyHandler())
-			//
+
 			// 秒杀专场
 			//authed.POST("skill_product/init", api.InitSkillProductHandler())
 			//authed.GET("skill_product/list", api.ListSkillProductHandler())
