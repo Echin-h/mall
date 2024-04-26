@@ -11,6 +11,7 @@ import (
 	"net/http"
 )
 
+// ListFavoritesHandler 收藏列表
 func ListFavoritesHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.FavoritesServiceReq
@@ -35,6 +36,7 @@ func ListFavoritesHandler() gin.HandlerFunc {
 	}
 }
 
+// CreateFavoritesHandler 新增收藏
 func CreateFavoritesHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.FavoriteCreateReq
@@ -61,6 +63,7 @@ func CreateFavoritesHandler() gin.HandlerFunc {
 	}
 }
 
+// DeleteFavoritesHandler 删除收藏
 func DeleteFavoritesHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.FavoriteDeleteReq

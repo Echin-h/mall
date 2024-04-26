@@ -13,6 +13,7 @@ import (
 	"net/http"
 )
 
+// UserRegisterHandler 用户注册
 func UserRegisterHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UserRegisterReq
@@ -41,6 +42,7 @@ func UserRegisterHandler() gin.HandlerFunc {
 	}
 }
 
+// UserLoginHandler 用户登录
 func UserLoginHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UserServiceReq
@@ -61,8 +63,7 @@ func UserLoginHandler() gin.HandlerFunc {
 	}
 }
 
-//func UserInfoUpdate(ctx)
-
+// UserUpdateHandler 用户信息更新
 func UserUpdateHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UserInfoUpdateReq
@@ -84,6 +85,7 @@ func UserUpdateHandler() gin.HandlerFunc {
 	}
 }
 
+// ShowUserInfoHandler 用户信息展示
 func ShowUserInfoHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UserInfoShowReq
@@ -103,6 +105,7 @@ func ShowUserInfoHandler() gin.HandlerFunc {
 	}
 }
 
+// SendEmailHandler 发送邮件
 func SendEmailHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.SendEmailServiceReq
@@ -123,6 +126,7 @@ func SendEmailHandler() gin.HandlerFunc {
 	}
 }
 
+// ValidEmailHandler 邮箱验证
 func ValidEmailHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.ValidEmailReq
@@ -144,6 +148,7 @@ func ValidEmailHandler() gin.HandlerFunc {
 	}
 }
 
+// UserFollowingHandler 用户关注
 func UserFollowingHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UserFollowingReq
@@ -164,6 +169,7 @@ func UserFollowingHandler() gin.HandlerFunc {
 	}
 }
 
+// UserUnFollowingHandler 不关注用户
 func UserUnFollowingHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UserFollowingReq
@@ -185,6 +191,7 @@ func UserUnFollowingHandler() gin.HandlerFunc {
 	}
 }
 
+// UploadAvatarHandler 上传头像
 func UploadAvatarHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		file, fileHeader, _ := ctx.Request.FormFile("file")

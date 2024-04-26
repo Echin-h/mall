@@ -10,6 +10,7 @@ import (
 	"net/http"
 )
 
+// CreateCartHandler 创建购物车
 func CreateCartHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.CartCreateReq
@@ -32,6 +33,7 @@ func CreateCartHandler() gin.HandlerFunc {
 	}
 }
 
+// ListCartHandler 购物车详细信息
 func ListCartHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.CartListReq
@@ -58,6 +60,7 @@ func ListCartHandler() gin.HandlerFunc {
 	}
 }
 
+// UpdateCartHandler 更新购物车
 func UpdateCartHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UpdateCartServiceReq
@@ -81,6 +84,7 @@ func UpdateCartHandler() gin.HandlerFunc {
 	}
 }
 
+// DeleteCartHandler 删除购物车
 func DeleteCartHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.DeleteCartReq

@@ -10,6 +10,7 @@ import (
 	"net/http"
 )
 
+// CreateOrderHandler 创建订单
 func CreateOrderHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.OrderCreateReq
@@ -32,6 +33,7 @@ func CreateOrderHandler() gin.HandlerFunc {
 	}
 }
 
+// ListOrdersHandler 订单列表
 func ListOrdersHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.OrderListReq
@@ -81,6 +83,7 @@ func ShowOrderHandler() gin.HandlerFunc {
 	}
 }
 
+// DeleteOrderHandler 更新订单
 func DeleteOrderHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.OrderDeleteReq

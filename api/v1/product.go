@@ -13,6 +13,7 @@ import (
 	"net/http"
 )
 
+// ListProductsHandler 展示商品列表
 func ListProductsHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.ProductListReq
@@ -38,6 +39,7 @@ func ListProductsHandler() gin.HandlerFunc {
 
 // TODO: create from both form and json is fail
 
+// CreateProductHandler 新增商品
 func CreateProductHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.ProductCreateReq
@@ -64,6 +66,7 @@ func CreateProductHandler() gin.HandlerFunc {
 	}
 }
 
+// ShowProductHandler 展示商品
 func ShowProductHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.ProductShowReq
@@ -86,6 +89,7 @@ func ShowProductHandler() gin.HandlerFunc {
 
 // TODO: 先实现用户信息缓存到Redis，然后在service层调用Redis，验证用户信息
 
+// UpdateProjectHandler 更新商品
 func UpdateProjectHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.ProductUpdateReq
@@ -105,6 +109,7 @@ func UpdateProjectHandler() gin.HandlerFunc {
 	}
 }
 
+// DeleteProductHandler 删除商品
 func DeleteProductHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.ProductDeleteReq
@@ -124,6 +129,7 @@ func DeleteProductHandler() gin.HandlerFunc {
 	}
 }
 
+// SearchProductsHandler 搜索商品
 func SearchProductsHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.ProductSearchReq
@@ -147,6 +153,7 @@ func SearchProductsHandler() gin.HandlerFunc {
 	}
 }
 
+// ListProductImgHandler 展示商品图片
 func ListProductImgHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.ListProductImgReq
@@ -173,6 +180,7 @@ func ListProductImgHandler() gin.HandlerFunc {
 	}
 }
 
+// ListCategoryHandler 展示商品分类
 func ListCategoryHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		l := service.GetCategorySrv()

@@ -10,8 +10,7 @@ import (
 	"net/http"
 )
 
-// 新增收获地址
-
+// CreateAddressHandler 新增收获地址
 func CreateAddressHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.AddressCreateReq
@@ -33,6 +32,7 @@ func CreateAddressHandler() gin.HandlerFunc {
 	}
 }
 
+// ShowAddressHandler 展示某个收获地址
 func ShowAddressHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.AddressGetReq
@@ -54,6 +54,7 @@ func ShowAddressHandler() gin.HandlerFunc {
 	}
 }
 
+// ListAddressHandler 展示收获地址
 func ListAddressHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.AddressListReq
@@ -75,6 +76,7 @@ func ListAddressHandler() gin.HandlerFunc {
 	}
 }
 
+// UpdateAddressHandler 修改收获地址
 func UpdateAddressHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.AddressServiceReq
@@ -96,6 +98,7 @@ func UpdateAddressHandler() gin.HandlerFunc {
 	}
 }
 
+// DeleteAddressHandler 删除收获地址
 func DeleteAddressHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.AddressDeleteReq

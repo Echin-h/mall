@@ -9,6 +9,7 @@ import (
 	"net/http"
 )
 
+// ShowMoneyHandler 新增资金
 func ShowMoneyHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.MoneyShowReq

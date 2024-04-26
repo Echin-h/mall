@@ -10,7 +10,7 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-// 区分错误 ， 区别一下是 解组错误（json） 还是 验证错误(validator), 使用类型断言来处理
+// ErrorResponse 区分错误 ， 区别一下是 解组错误（json） 还是 验证错误(validator), 使用类型断言来处理
 func ErrorResponse(ctx *gin.Context, err error) *ctl.TrackedErrorResponse {
 	if ve, ok := err.(validator.ValidationErrors); ok {
 		for _, fieldError := range ve {
