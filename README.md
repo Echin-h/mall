@@ -49,4 +49,7 @@
 - 权限的设置挺想用casbin的
 - 没了，太懒了
 
+### 测试地址:
+
+https://apifox.com/apidoc/shared-143d825b-6a93-46b4-b8e0-8939d533fa6f
 
