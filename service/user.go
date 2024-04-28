@@ -85,7 +85,7 @@ func (s *UserSrv) UserLogin(ctx context.Context, req *types.UserServiceReq) (res
 	var user *model.User
 	userDao := dao.NewUserDao(ctx)
 	user, exist, err := userDao.ExistOrNotByUserName(req.UserName)
-	if !exist {
+	if !exist || err != nil {
 		log.LogrusObj.Error("用户不存在", err)
 		err = errors.New("用户不存在")
 		return

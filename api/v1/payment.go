@@ -20,7 +20,7 @@ func OrderPaymentHandler() gin.HandlerFunc {
 		}
 
 		l := service.GetPaymentSrv()
-		resp, err := l.Pay(ctx.Request.Context(), &req)
+		resp, err := l.Payment(ctx.Request.Context(), &req)
 		if err != nil {
 			log.LogrusObj.Infoln(err)
 			ctx.JSON(http.StatusInternalServerError, ErrorResponse(ctx, err))

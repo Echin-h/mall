@@ -90,3 +90,16 @@ func (dao *OrderDao) DeleteOrderById(id, uId uint) (err error) {
 	return dao.DB.Where("id = ? AND user_id = ?", id, uId).
 		Delete(&model.Order{}).Error
 }
+
+func (dao *OrderDao) GetOrderById(id, uId uint) (order *model.Order, err error) {
+	err = dao.DB.Model(&model.Order{}).
+		Where("id = ? AND user_id = ?", id, uId).First(&order).Error
+	return
+}
+
+func (dao *OrderDao) UpdateOrderById(id uint, order *model.Order) (err error) {
+	err = dao.DB.Model(&model.Order{}).
+		Where("id = ?", id).
+		Updates(order).Error
+	return
+}

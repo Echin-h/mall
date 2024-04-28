@@ -1,17 +1,133 @@
 package service
 
-//设计商品库存模型：首先要设计一个合适的商品库存模型，例如使用Redis的数据类型，如Hash、List等来存储商品的库存量，其中商品的唯一标识作为Hash的Key，库存数量作为Hash的Value。
-//
-//设计秒杀活动队列：使用MQ来设计秒杀活动队列，将用户的秒杀请求存入队列中，以便后续进行处理。可以选择常用的消息队列系统，如RabbitMQ、Kafka等。
-//
-//限流控制：在进行秒杀活动时，需要对用户的请求进行限流控制，以防止服务过载。可以使用Redis的原子操作INCR来实现简单的计数器限流功能。
-//
-//获取库存：当用户发起秒杀请求时，先通过Redis获取商品的库存量。如果库存大于0，才继续进行秒杀逻辑；否则提示秒杀已结束或库存不足。
-//
-//扣减库存：在进行秒杀逻辑前，需要对商品库存进行扣减操作。使用Redis的原子操作DECR来实现，保证扣减库存的原子性。
-//
-//下单处理：秒杀成功后，用户可以下单购买商品。可以将秒杀成功的用户信息和商品信息存入订单表，完成下单处理。
-//
-//异步处理：由于秒杀活动可能会引起高并发，为了提高系统的性能和可用性，可以将秒杀请求的处理放入MQ中进行异步处理，这样可以削峰填谷，降低系统压力。
-//
-//前端处理：在前端页面，展示秒杀倒计时和秒杀按钮，通过JavaScript调用后端接口进行秒杀请求的发起
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"gin-mall/pkg/util/log"
+	"gin-mall/respository/cache"
+	"gin-mall/respository/db/dao"
+	"gin-mall/respository/db/model"
+	"gin-mall/types"
+	"sync"
+)
+
+var skillProductSrvIns *SkillProductSrv
+var skillProductSrvOnce sync.Once
+
+type SkillProductSrv struct{}
+
+func GetSkillProductSrv() *SkillProductSrv {
+	skillProductSrvOnce.Do(func() {
+		skillProductSrvIns = &SkillProductSrv{}
+	})
+	return skillProductSrvIns
+}
+
+func (s *SkillProductSrv) InitSkillProduct(ctx context.Context, req *types.SkillProductReq) (resp interface{}, err error) {
+	spList := make([]*model.SkillProduct, 0)
+	for i := 1; i < 10; i++ {
+		spList = append(spList, &model.SkillProduct{
+			ProductId: uint(i),
+			BossId:    2,
+			Title:     "秒杀商品测试使用",
+			Money:     200,
+			Num:       10,
+		})
+	}
+
+	err = dao.NewSkillProductDao(ctx).BatchCreate(spList)
+	if err != nil {
+		log.LogrusObj.Infoln(err)
+		return
+	}
+
+	// 导入缓存
+	for i := range spList {
+		jsonBytes, err := json.Marshal(spList[i])
+		if err != nil {
+			log.LogrusObj.Infoln(err)
+			return nil, errors.New("json marshal error")
+		}
+		jsonString := string(jsonBytes)
+		_, err = cache.RedisClient.LPush(ctx, cache.SkillProductListKey, jsonString).Result()
+		if err != nil {
+			log.LogrusObj.Infoln(err)
+			return nil, err
+		}
+	}
+
+	return
+}
+
+// ListSkillGoods 列表展示
+func (s *SkillProductSrv) ListSkillGoods(ctx context.Context) (resp interface{}, err error) {
+	// 读缓存
+	rc := cache.RedisClient
+	// 获取列表
+	skillProductList, err := rc.LRange(ctx, cache.SkillProductListKey, 0, -1).Result()
+	if err != nil {
+		log.LogrusObj.Infoln(err)
+		return
+	}
+
+	if len(skillProductList) == 0 {
+		skill, errx := dao.NewSkillProductDao(ctx).ListSkillGoods()
+		if errx != nil {
+			log.LogrusObj.Infoln(errx)
+			return nil, errx
+		}
+
+		for i := range skill {
+			// 将结构体转换为JSON格式的字符串
+			jsonBytes, errx := json.Marshal(skill[i])
+			if errx != nil {
+				log.LogrusObj.Infoln(errx)
+				return
+			}
+			// 将字节数组转换为字符串
+			jsonString := string(jsonBytes)
+			_, errx = rc.LPush(ctx, cache.SkillProductListKey, jsonString).Result()
+			if errx != nil {
+				log.LogrusObj.Infoln(errx)
+				return nil, errx
+			}
+		}
+		resp = skill
+	} else {
+		resp = skillProductList
+	}
+
+	return
+}
+
+// GetSkillGoods 详情展示
+func (s *SkillProductSrv) GetSkillGoods(ctx context.Context, req *types.GetSkillProductReq) (resp interface{}, err error) {
+	// 读缓存
+	rc := cache.RedisClient
+	// 获取列表
+	resp, err = rc.Get(ctx,
+		fmt.Sprintf(cache.SkillProductKey, req.ProductId)).Result()
+	if err != nil {
+		log.LogrusObj.Infoln(err)
+		return
+	}
+
+	return
+}
+
+// SkillProduct 秒杀商品
+func (s *SkillProductSrv) SkillProduct(ctx context.Context, req *types.SkillProductReq) (resp interface{}, err error) {
+	// 读缓存
+	rc := cache.RedisClient
+	// 获取数据
+	resp, err = rc.Get(ctx,
+		fmt.Sprintf(cache.SkillProductKey, req.ProductId)).Result()
+	if err != nil {
+		log.LogrusObj.Infoln(err)
+		return
+	}
+
+	return
+}
