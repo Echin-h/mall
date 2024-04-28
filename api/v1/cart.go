@@ -11,6 +11,14 @@ import (
 )
 
 // CreateCartHandler 创建购物车
+// @Summary 创建购物车
+// @Tags cart
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param cart body CartCreateReq true "cart"
+// @Success 200 {object} ctl.Response{data=types.CartCreateResp} "success"
+// @Router /api/v1/cart/create [post]
 func CreateCartHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.CartCreateReq
@@ -34,6 +42,15 @@ func CreateCartHandler() gin.HandlerFunc {
 }
 
 // ListCartHandler 购物车详细信息
+// @Summary 购物车详细信息
+// @Tags cart
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param page query int false "page"
+// @Param pageSize query int false "pageSize"
+// @Success 200 {object} ctl.Response{data=types.CartListResp} "success"
+// @Router /api/v1/cart/list [get]
 func ListCartHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.CartListReq
@@ -61,6 +78,14 @@ func ListCartHandler() gin.HandlerFunc {
 }
 
 // UpdateCartHandler 更新购物车
+// @Summary 更新购物车
+// @Tags cart
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param cart body UpdateCartServiceReq true "cart"
+// @Success 200 {object} ctl.Response{data=types.UpdateCartServiceResp} "success"
+// @Router /api/v1/cart/update [post]
 func UpdateCartHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UpdateCartServiceReq
@@ -85,6 +110,14 @@ func UpdateCartHandler() gin.HandlerFunc {
 }
 
 // DeleteCartHandler 删除购物车
+// @Summary 删除购物车
+// @Tags cart
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param cart body DeleteCartReq true "cart"
+// @Success 200 {object} ctl.Response{data=types.DeleteCartResp} "success"
+// @Router /api/v1/cart/delete [post]
 func DeleteCartHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.DeleteCartReq

@@ -14,6 +14,13 @@ import (
 )
 
 // UserRegisterHandler 用户注册
+// @Summary 用户注册
+// @Tags user
+// @Accept json
+// @Produce json
+// @Param user body UserRegisterReq true "user"
+// @Success 200 {object} ctl.Response
+// @Router /api/v1/user/register [post]
 func UserRegisterHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UserRegisterReq
@@ -43,6 +50,13 @@ func UserRegisterHandler() gin.HandlerFunc {
 }
 
 // UserLoginHandler 用户登录
+// @Summary 用户登录
+// @Tags user
+// @Accept json
+// @Produce json
+// @Param user body UserServiceReq true "user"
+// @Success 200 {object} ctl.Response
+// @Router /api/v1/user/login [post]
 func UserLoginHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UserServiceReq
@@ -64,6 +78,13 @@ func UserLoginHandler() gin.HandlerFunc {
 }
 
 // UserUpdateHandler 用户信息更新
+// @Summary 用户信息更新
+// @Tags user
+// @Accept json
+// @Produce json
+// @Param user body UserInfoUpdateReq true "user"
+// @Success 200 {object} ctl.Response
+// @Router /api/v1/user/update [post]
 func UserUpdateHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UserInfoUpdateReq
@@ -86,6 +107,14 @@ func UserUpdateHandler() gin.HandlerFunc {
 }
 
 // ShowUserInfoHandler 用户信息展示
+// @Summary 用户信息展示
+// @Tags user
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param id query string true "id"
+// @Success 200 {object} ctl.Response
+// @Router /api/v1/user/show [get]
 func ShowUserInfoHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UserInfoShowReq
@@ -106,6 +135,13 @@ func ShowUserInfoHandler() gin.HandlerFunc {
 }
 
 // SendEmailHandler 发送邮件
+// @Summary 发送邮件
+// @Tags user
+// @Accept json
+// @Produce json
+// @Param email body SendEmailServiceReq true "email"
+// @Success 200 {object} ctl.Response
+// @Router /api/v1/user/send_email [post]
 func SendEmailHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.SendEmailServiceReq
@@ -127,6 +163,13 @@ func SendEmailHandler() gin.HandlerFunc {
 }
 
 // ValidEmailHandler 邮箱验证
+// @Summary 邮箱验证
+// @Tags user
+// @Accept json
+// @Produce json
+// @Param email body ValidEmailReq true "email"
+// @Success 200 {object} ctl.Response
+// @Router /api/v1/user/valid_email [post]
 func ValidEmailHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.ValidEmailReq
@@ -149,6 +192,14 @@ func ValidEmailHandler() gin.HandlerFunc {
 }
 
 // UserFollowingHandler 用户关注
+// @Summary 用户关注
+// @Tags user
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param user_id body UserFollowingReq true "user_id"
+// @Success 200 {object} ctl.Response
+// @Router /api/v1/user/following [post]
 func UserFollowingHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UserFollowingReq
@@ -170,6 +221,14 @@ func UserFollowingHandler() gin.HandlerFunc {
 }
 
 // UserUnFollowingHandler 不关注用户
+// @Summary 不关注用户
+// @Tags user
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param user_id body UserFollowingReq true "user_id"
+// @Success 200 {object} ctl.Response
+// @Router /api/v1/user/un_following [post]
 func UserUnFollowingHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UserFollowingReq
@@ -192,6 +251,14 @@ func UserUnFollowingHandler() gin.HandlerFunc {
 }
 
 // UploadAvatarHandler 上传头像
+// @Summary 上传头像
+// @Tags user
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param file formData file true "file"
+// @Success 200 {object} ctl.Response
+// @Router /api/v1/user/avatar [post]
 func UploadAvatarHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		file, fileHeader, _ := ctx.Request.FormFile("file")

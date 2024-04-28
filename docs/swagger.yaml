@@ -1,0 +1,16 @@
+basePath: /api/v1
+host: 127.0.0.1:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: echin
+    url: https://echin-h.github.io/
+  description: gin mall for learning
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: mall
+  version: "1.0"
+paths: {}
+swagger: "2.0"

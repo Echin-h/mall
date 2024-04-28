@@ -9,6 +9,15 @@ import (
 	"net/http"
 )
 
+// OrderPaymentHandler 订单支付
+// @Summary 订单支付
+// @Tags payment
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param payment body PaymentDownReq true "payment"
+// @Success 200 {object} ctl.Response{data=types.PaymentDownResp} "success"
+// @Router /api/v1/payment/down [post]
 func OrderPaymentHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.PaymentDownReq

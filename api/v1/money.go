@@ -10,6 +10,14 @@ import (
 )
 
 // ShowMoneyHandler 新增资金
+// @Summary 新增资金
+// @Tags money
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param money body MoneyCreateReq true "money"
+// @Success 200 {object} ctl.Response{data=types.MoneyCreateResp} "success"
+// @Router /api/v1/money/create [post]
 func ShowMoneyHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.MoneyShowReq

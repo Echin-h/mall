@@ -2,10 +2,13 @@ package router
 
 import (
 	api "gin-mall/api/v1"
+	_ "gin-mall/docs"
 	"gin-mall/middelware"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"net/http"
 )
 
@@ -20,6 +23,9 @@ func NewRouter() *gin.Engine {
 		v1.GET("ping", func(c *gin.Context) {
 			c.JSON(200, "success")
 		})
+
+		// 生成接口文档
+		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 		//用户操作
 		v1.POST("user/register", api.UserRegisterHandler())
@@ -82,9 +88,9 @@ func NewRouter() *gin.Engine {
 
 			// 秒杀专场
 			authed.POST("skill_product/init", api.InitSkillProductHandler())
-			//authed.GET("skill_product/list", api.ListSkillProductHandler())
-			//authed.GET("skill_product/show", api.GetSkillProductHandler())
-			//authed.POST("skill_product/skill", api.SkillProductHandler())
+			authed.GET("skill_product/list", api.ListSkillProductHandler())
+			authed.GET("skill_product/show", api.GetSkillProductHandler())
+			authed.POST("skill_product/skill", api.SkillProductHandler())
 		}
 	}
 	return r

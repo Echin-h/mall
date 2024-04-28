@@ -12,6 +12,15 @@ import (
 )
 
 // ListFavoritesHandler 收藏列表
+// @Summary 收藏列表
+// @Tags favorite
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param page query int false "page"
+// @Param pageSize query int false "pageSize"
+// @Success 200 {object} ctl.Response{data=types.FavoritesServiceResp} "success"
+// @Router /api/v1/favorites/list [get]
 func ListFavoritesHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.FavoritesServiceReq
@@ -37,6 +46,14 @@ func ListFavoritesHandler() gin.HandlerFunc {
 }
 
 // CreateFavoritesHandler 新增收藏
+// @Summary 新增收藏
+// @Tags favorite
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param favorite body FavoriteCreateReq true "favorite"
+// @Success 200 {object} ctl.Response{data=types.FavoriteCreateResp} "success"
+// @Router /api/v1/favorites/create [post]
 func CreateFavoritesHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.FavoriteCreateReq
@@ -64,6 +81,14 @@ func CreateFavoritesHandler() gin.HandlerFunc {
 }
 
 // DeleteFavoritesHandler 删除收藏
+// @Summary 删除收藏
+// @Tags favorite
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param favorite body FavoriteDeleteReq true "favorite"
+// @Success 200 {object} ctl.Response{data=types.FavoriteDeleteResp} "success"
+// @Router /api/v1/favorites/delete [post]
 func DeleteFavoritesHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.FavoriteDeleteReq

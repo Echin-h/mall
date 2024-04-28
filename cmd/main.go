@@ -10,6 +10,21 @@ import (
 	"gin-mall/router"
 )
 
+// @title mall
+// @version 1.0
+// @description gin mall for learning
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name echin
+// @contact.url https://echin-h.github.io/
+// @contact.email support@swagger.io
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host 127.0.0.1:8080
+// @BasePath /api/v1
+
 func main() {
 	loading()
 	r := router.NewRouter()

@@ -11,6 +11,14 @@ import (
 )
 
 // CreateOrderHandler 创建订单
+// @Summary 创建订单
+// @Tags order
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param order body OrderCreateReq true "order"
+// @Success 200 {object} ctl.Response{data=types.OrderCreateResp} "success"
+// @Router /api/v1/order/create [post]
 func CreateOrderHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.OrderCreateReq
@@ -34,6 +42,15 @@ func CreateOrderHandler() gin.HandlerFunc {
 }
 
 // ListOrdersHandler 订单列表
+// @Summary 订单列表
+// @Tags order
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param page query int false "page"
+// @Param pageSize query int false "pageSize"
+// @Success 200 {object} ctl.Response{data=types.OrderListResp} "success"
+// @Router /api/v1/order/list [get]
 func ListOrdersHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.OrderListReq
@@ -61,6 +78,14 @@ func ListOrdersHandler() gin.HandlerFunc {
 }
 
 // ShowOrderHandler 订单详情
+// @Summary 订单详情
+// @Tags order
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param id query string true "id"
+// @Success 200 {object} ctl.Response{data=types.OrderShowResp} "success"
+// @Router /api/v1/order/show [get]
 func ShowOrderHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.OrderShowReq
@@ -84,6 +109,14 @@ func ShowOrderHandler() gin.HandlerFunc {
 }
 
 // DeleteOrderHandler 更新订单
+// @Summary 更新订单
+// @Tags order
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param order body OrderUpdateReq true "order"
+// @Success 200 {object} ctl.Response{data=types.OrderUpdateResp} "success"
+// @Router /api/v1/order/update [post]
 func DeleteOrderHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.OrderDeleteReq

@@ -1,0 +1,21 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "gin mall for learning",
+        "title": "mall",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "echin",
+            "url": "https://echin-h.github.io/",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "127.0.0.1:8080",
+    "basePath": "/api/v1",
+    "paths": {}
+}

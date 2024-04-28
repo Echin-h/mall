@@ -9,6 +9,15 @@ import (
 	"net/http"
 )
 
+// InitSkillProductHandler 初始化秒杀商品信息
+// @Summary 初始化秒杀商品信息
+// @Tags skill_product
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param skill_product body SkillProductReq true "skill_product"
+// @Success 200 {object} ctl.Response{data=types.SkillProductResp} "success"
+// @Router /api/v1/skill_product/init [post]
 func InitSkillProductHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.SkillProductReq
@@ -31,6 +40,13 @@ func InitSkillProductHandler() gin.HandlerFunc {
 }
 
 // ListSkillProductHandler 初始化秒杀商品信息
+// @Summary 初始化秒杀商品信息
+// @Tags skill_product
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Success 200 {object} ctl.Response{data=types.ListSkillProductResp} "success"
+// @Router /api/v1/skill_product/list [get]
 func ListSkillProductHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.ListSkillProductReq
@@ -53,6 +69,14 @@ func ListSkillProductHandler() gin.HandlerFunc {
 }
 
 // GetSkillProductHandler 获取秒杀商品的详情
+// @Summary 获取秒杀商品的详情
+// @Tags skill_product
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "token<access_token><refresh_token>"
+// @Param id query string true "id"
+// @Success 200 {object} ctl.Response{data=types.GetSkillProductResp} "success"
+// @Router /api/v1/skill_product/get [get]
 func GetSkillProductHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.GetSkillProductReq
@@ -74,6 +98,15 @@ func GetSkillProductHandler() gin.HandlerFunc {
 	}
 }
 
+// SkillProductHandler 秒杀商品
+// @Summary 秒杀商品
+// @Tags skill_product
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "
+// @Param skill_product body SkillProductReq true "skill_product"
+// @Success 200 {object} ctl.Response{data=types.SkillProductResp} "success"
+// @Router /api/v1/skill_product [post]
 func SkillProductHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.SkillProductReq
