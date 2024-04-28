@@ -1,0 +1,54 @@
+system:
+  domain: mall
+  version: 1.0
+  env: "dev"
+  HttpPort: 
+  Host: 
+  UploadModel: 
+
+mysql:
+  default:
+    dialect: 
+    dbHost: 
+    dbPort: 
+    dbName: 
+    userName: 
+    password: 
+    charset: 
+redis:
+  redisDbName: 
+  redisHost: 
+  redisPort: 
+  redisUserName:
+  redisPassword:
+  redisNetwork: 
+
+email:
+  address: http://localhost:8080/#/vaild/email/
+  smtpHost: 
+  smtpEmail: 
+  smtpPass: 
+
+encryptSecret:
+  jwtSecret: 
+  emailSecret: 
+  phoneSecret: 
+  moneySecret: 
+
+oss:
+  AccessKeyId: 
+  AccessKeySecret: 
+  BucketName: 
+  QiNiuServer: 
+
+photoPath:
+  photoHost: http://127.0.0.1
+  ProductPath: /static/imgs/product/
+  AvatarPath: /static/imgs/avatar/
+
+rabbitMq:
+  rabbitMQ: 
+  rabbitMQUser: 
+  rabbitMQPassWord: 
+  rabbitMQHost: 
+  rabbitMQPort: 
