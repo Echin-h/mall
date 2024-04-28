@@ -38,4 +38,5 @@ func loading() {
 	cache.InitCache()
 	rabbitmq.InitRabbitMQ()
 	log.InitLog()
+	fmt.Println("加载配置完成...")
 }
