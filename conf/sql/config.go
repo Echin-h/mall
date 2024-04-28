@@ -8,17 +8,16 @@ import (
 var Config *Conf
 
 type Conf struct {
-	System        *System                 `yaml:"system"`
-	Oss           *Oss                    `yaml:"oss"`
-	MySql         map[string]*MySql       `yaml:"mysql"`
-	Email         *Email                  `yaml:"email"`
-	Redis         *Redis                  `yaml:"redis"`
-	EncryptSecret *EncryptSecret          `yaml:"encryptSecret"`
-	Cache         *Cache                  `yaml:"cache"`
-	KafKa         map[string]*KafkaConfig `yaml:"kafKa"`
-	RabbitMq      *RabbitMq               `yaml:"rabbitMq"`
-	Es            *Es                     `yaml:"es"`
-	PhotoPath     *LocalPhotoPath         `yaml:"photoPath"`
+	System        *System           `yaml:"system"`
+	Oss           *Oss              `yaml:"oss"`
+	MySql         map[string]*MySql `yaml:"mysql"`
+	Email         *Email            `yaml:"email"`
+	Redis         *Redis            `yaml:"redis"`
+	EncryptSecret *EncryptSecret    `yaml:"encryptSecret"`
+	Cache         *Cache            `yaml:"cache"`
+	RabbitMq      *RabbitMq         `yaml:"rabbitMq"`
+	Es            *Es               `yaml:"es"`
+	PhotoPath     *LocalPhotoPath   `yaml:"photoPath"`
 }
 
 type RabbitMq struct {
@@ -27,17 +26,6 @@ type RabbitMq struct {
 	RabbitMQPassWord string `yaml:"rabbitMqPassWord"`
 	RabbitMQHost     string `yaml:"rabbitMqHost"`
 	RabbitMQPort     string `yaml:"rabbitMqPort"`
-}
-
-type KafkaConfig struct {
-	DisableConsumer bool   `yaml:"disableConsumer"`
-	Debug           bool   `yaml:"debug"`
-	Address         string `yaml:"address"`
-	RequiredAck     int    `yaml:"requiredAck"`
-	ReadTimeout     int64  `yaml:"readTimeout"`
-	WriteTimeout    int64  `yaml:"writeTimeout"`
-	MaxOpenRequests int    `yaml:"maxOpenRequests"`
-	Partition       int    `yaml:"partition"`
 }
 
 type System struct {

@@ -11,7 +11,8 @@ var GlobalRabbitMQ *amqp.Connection
 // InitRabbitMQ initializes the rabbitMQ connection in the middleware
 func InitRabbitMQ() {
 	rConfig := conf.Config.RabbitMq
-	pathRabbitMQ := strings.Join([]string{rConfig.RabbitMQ, "://", rConfig.RabbitMQUser, ":", rConfig.RabbitMQPassWord, "@", rConfig.RabbitMQHost, ":", rConfig.RabbitMQPort, "/"}, "")
+	pathRabbitMQ := strings.Join([]string{rConfig.RabbitMQ, "://", rConfig.RabbitMQUser, ":",
+		rConfig.RabbitMQPassWord, "@", rConfig.RabbitMQHost, ":", rConfig.RabbitMQPort, "/"}, "")
 	conn, err := amqp.Dial(pathRabbitMQ)
 	if err != nil {
 		panic(err)
