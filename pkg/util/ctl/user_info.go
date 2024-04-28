@@ -2,7 +2,9 @@ package ctl
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
+	"gin-mall/respository/cache"
 )
 
 type key int
@@ -39,7 +41,21 @@ func GetUserInfo(ctx context.Context) (*UserInfo, error) {
 	return user, nil
 }
 
+// InitUserInfo 用户信息走缓存
 func InitUserInfo(ctx context.Context) {
-	// TOOD 放缓存，之后的用户信息，走缓存
-	// 往缓存中存放 UserInfo这个结构体
+	_ = CacheUserInfo(ctx.Value(userKey).(*UserInfo))
+	return
+}
+
+func CacheUserInfo(u *UserInfo) error {
+	cache.RedisClient.Set(cache.RedisContext, string(rune(userKey)), u, 0)
+	return nil
+}
+
+func GetUserInfoFromCache(ctx context.Context) (*UserInfo, error) {
+	res, err := cache.RedisClient.Get(cache.RedisContext, string(rune(userKey))).Result()
+	b := []byte(res)
+	var u *UserInfo
+	err = json.Unmarshal(b, u)
+	return u, err
 }
